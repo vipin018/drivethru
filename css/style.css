@@ -1,16 +1,109 @@
-body { margin: 0; overflow: hidden; background-color: #000; }
-canvas { display: block; }
-
-#instructions {
-    position: absolute; top: 20px; left: 20px; color: white; 
-    font-family: 'Segoe UI', sans-serif; background: rgba(0,0,0,0.6); 
-    padding: 15px; border-radius: 8px; backdrop-filter: blur(5px);
-    border-left: 4px solid #ff3333;
-    pointer-events: none;
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #000;
+}
+canvas {
+  display: block;
 }
 
-#loading {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    color: #ff3333; font-family: sans-serif; font-size: 1.5rem; letter-spacing: 2px;
-    pointer-events: none; transition: opacity 0.5s;
+#instructions {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  font-family: "Segoe UI", sans-serif;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 15px;
+  border-radius: 8px;
+  backdrop-filter: blur(5px);
+  border-left: 4px solid #ff3333;
+  pointer-events: none;
+}
+
+/* --- F1 LOADER STYLES --- */
+#f1-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease-out;
+}
+
+/* Container for the 5 lights */
+.lights-container {
+  display: flex;
+  gap: 15px;
+  background: #111;
+  padding: 15px 25px;
+  border-radius: 10px;
+  border-bottom: 4px solid #333;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+  margin-bottom: 30px;
+}
+
+/* Individual Light Bulb */
+.light {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #333; /* Off state */
+  border: 2px solid #000;
+  animation: lightsOn 1.5s infinite;
+}
+
+/* Staggered animation delays for the 5 lights */
+.light:nth-child(1) {
+  animation-delay: 0s;
+}
+.light:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.light:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.light:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.light:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+/* The Loading Text */
+.loading-text {
+  color: #fff;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-weight: 900; /* Extra bold */
+  font-style: italic; /* Speed look */
+  font-size: 2rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Animation Keyframes */
+@keyframes lightsOn {
+  0% {
+    background-color: #333;
+    box-shadow: none;
+  }
+  10% {
+    background-color: #ff0000;
+    box-shadow: 0 0 15px #ff0000;
+  } /* RED LIGHT */
+  80% {
+    background-color: #62ff00;
+    box-shadow: 0 0 15px #62ff00;
+  }
+  100% {
+    background-color: #333;
+    box-shadow: none;
+  }
 }

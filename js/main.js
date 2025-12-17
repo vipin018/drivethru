@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { vertexShader } from "../shaders/vertex.js";
 import { fragmentShader } from "../shaders/fragment.js";
@@ -172,32 +172,60 @@ function setupWheel(model, name, extras = []) {
   return { hub, mesh };
 }
 
-new GLTFLoader().load("model.glb", (gltf) => {
-  carModel = gltf.scene;
-  carModel.scale.set(2.5, 2.5, 2.5);
-  carModel.traverse((o) => {
-    if (o.isMesh) {
-      o.castShadow = true;
-      o.receiveShadow = true;
-      if (o.material) o.material.envMapIntensity = 1;
+// ... existing imports
+
+// ... existing setup code ...
+
+const loader = new GLTFLoader();
+loader.load(
+  "model.glb",
+  (gltf) => {
+    carModel = gltf.scene;
+    carModel.scale.set(2.5, 2.5, 2.5);
+
+    carModel.traverse((o) => {
+      if (o.isMesh) {
+        o.castShadow = true;
+        o.receiveShadow = true;
+        if (o.material) o.material.envMapIntensity = 1;
+      }
+    });
+
+    // Setup Wheels
+    wheels.LF = setupWheel(carModel, "WHEEL_LF_38_69", [
+      "SUSP_LF_47_80",
+      "SUS_ROD_FL_172_292",
+    ]);
+    wheels.RF = setupWheel(carModel, "WHEEL_RF_62_102", [
+      "SUSP_RF_56_91",
+      "SUS_ROD_FR_175_297",
+    ]);
+    wheels.LR = setupWheel(carModel, "WHEEL_LR_82_134");
+    wheels.RR = setupWheel(carModel, "WHEEL_RR_68_113");
+    steeringWheelMesh = carModel.getObjectByName("STEER_HR_148_167");
+
+    scene.add(carModel);
+    initInputs();
+
+    // --- REMOVE F1 LOADER ---
+    const loaderEl = document.getElementById("f1-loader");
+    if (loaderEl) {
+      // Fade out effect
+      loaderEl.style.opacity = "0";
+      setTimeout(() => {
+        loaderEl.style.display = "none";
+      }, 500); // Wait for fade out transition
     }
-  });
-
-  wheels.LF = setupWheel(carModel, "WHEEL_LF_38_69", [
-    "SUSP_LF_47_80",
-    "SUS_ROD_FL_172_292",
-  ]);
-  wheels.RF = setupWheel(carModel, "WHEEL_RF_62_102", [
-    "SUSP_RF_56_91",
-    "SUS_ROD_FR_175_297",
-  ]);
-  wheels.LR = setupWheel(carModel, "WHEEL_LR_82_134");
-  wheels.RR = setupWheel(carModel, "WHEEL_RR_68_113");
-  steeringWheelMesh = carModel.getObjectByName("STEER_HR_148_167");
-
-  scene.add(carModel);
-  initInputs(); // Start listening for keys
-});
+  },
+  // Optional: Progress updates (if you want to log it)
+  (xhr) => {
+    console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+  },
+  // Optional: Error handling
+  (error) => {
+    console.error("An error happened", error);
+  }
+);
 
 // --- ANIMATION LOOP ---
 const clock = new THREE.Clock();
