@@ -1,4 +1,4 @@
-export const fragmentShader = `
+
 varying vec2 vUv;
 varying vec3 vColor;
 varying float vLight;
@@ -20,4 +20,3 @@ void main() {
 
     gl_FragColor = vec4(finalColor, 1.0);
 }
-`;

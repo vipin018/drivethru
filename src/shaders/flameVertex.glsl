@@ -1,5 +1,4 @@
-// flameVertexShader.js
-export const flameVertexShader = `
+
 varying vec2 vUv;
 varying float vNoise;
 uniform float time;
@@ -55,4 +54,3 @@ void main() {
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
 }
-`;

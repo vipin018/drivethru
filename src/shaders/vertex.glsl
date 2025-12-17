@@ -1,4 +1,4 @@
-export const vertexShader = `
+
 varying vec2 vUv;
 varying vec3 vColor;
 varying float vLight; // Send lighting data to fragment
@@ -76,4 +76,3 @@ void main() {
     
     vColor = baseColor;
 }
-`;

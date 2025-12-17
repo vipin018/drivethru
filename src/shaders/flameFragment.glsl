@@ -1,4 +1,4 @@
-export const flameFragmentShader = `
+
 varying vec2 vUv;
 varying float vNoise;
 uniform float opacity;
@@ -36,4 +36,3 @@ void main() {
 
     gl_FragColor = vec4(finalColor, alpha);
 }
-`;
