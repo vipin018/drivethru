@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Grass Simulation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="instructions">
+        <h2>F1 LOD Simulation</h2>
+        <p>↑ Accelerate | ↓ Brake/Rev</p>
+        <p>← → Steer</p>
+    </div>
+
+    <div id="loading">LOADING ASSETS...</div>
+
+    <!-- Import Map: Defines where to get Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <!-- Main Entry Point -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
