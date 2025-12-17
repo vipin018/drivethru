@@ -1,4 +1,3 @@
-
 varying vec2 vUv;
 varying float vNoise;
 uniform float time;
@@ -32,25 +31,25 @@ void main() {
     vUv = uv;
     vec3 pos = position;
 
-    // High-speed flow with faster scrolling
-    float flow = time * 25.0;
+    // High-speed flow
+    float flow = time * 28.0;
 
-    // Multi-octave noise for turbulent shape
-    float n = fbm(vec2(uv.x * 8.0, uv.y * 4.0 - flow), 4); // 4 octaves
-    vNoise = n;
+    // Multi-octave noise
+    float n = fbm(vec2(uv.x * 10.0, uv.y * 5.0 - flow), 5);
+    vNoise = n * 1.1; // Balanced noise for color flicker
 
-    // Expansion: Wider towards tip
-    float expansion = uv.y * (0.5 + n * 0.3);
+    // Expansion towards tip
+    float expansion = uv.y * (0.6 + n * 0.4);
     pos.x *= 1.0 + expansion;
     pos.z *= 1.0 + expansion;
 
-    // Wobble and distortion: Stronger at tip
-    float wobble = sin(uv.y * 12.0 - time * 35.0) * 0.15 * uv.y;
-    pos.x += wobble + (n * 0.15 * uv.y);
-    pos.z += wobble + (n * 0.15 * uv.y);
+    // Wobble and distortion
+    float wobble = sin(uv.y * 15.0 - time * 40.0) * 0.18 * uv.y;
+    pos.x += wobble + (n * 0.2 * uv.y);
+    pos.z += wobble + (n * 0.2 * uv.y);
 
-    // Slight pulsing elongation
-    pos.y *= 1.0 + 0.2 * sin(time * 10.0);
+    // Pulsing elongation
+    pos.y *= 1.0 + 0.25 * sin(time * 12.0);
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
 }
